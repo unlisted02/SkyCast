@@ -1,0 +1,24 @@
+.auth-btn {
+    padding: 1rem;
+    border-radius: 2rem;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    width: 50%;
+    box-shadow: 0 0 2rem rgba(0, 0, 255, 0.1);
+}
+
+.auth-btn:hover {
+    background: linear-gradient(to right, #03a9f4, #00ff9b);
+}
+
+/* .btn-disabled {
+    background-color: lightgray;
+}
+
+.btn-disabled:hover {
+    background: lightgray;
+} */

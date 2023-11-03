@@ -1,9 +1,19 @@
 import "./style.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase";
+import { signOut } from "firebase/auth";
+
 const SideBar = ({ showMenu, toggleMenu, darkModeActive }) => {
-    const userEmail = localStorage.getItem("uid") ? localStorage.getItem("uid") : "user@example.com";
+    const navigate = useNavigate();
+    const userEmail = localStorage.getItem("email") ? localStorage.getItem("email") : "user@example.com";
 
     const logout = () => {
+        signOut(auth).then(() => {
+            localStorage.removeItem("uid");
+            localStorage.removeItem("email");
+            navigate("/");
+        }).catch((error) => {
+        });
     };
 
     return (
@@ -20,7 +30,7 @@ const SideBar = ({ showMenu, toggleMenu, darkModeActive }) => {
                     </div>
                 </section>
                 <section className="menu-body">
-                    <ul className={`menu-links ${darkModeActive ? 'menu-links-dark' : ''}`}>
+                    <ul className={`menu-links ${darkModeActive && 'menu-links-dark'}`}>
                         <li className="menu-link">
                             <NavLink to="/home" onClick={toggleMenu} activeclassname="link-active">Home</NavLink>
                         </li>
@@ -31,7 +41,7 @@ const SideBar = ({ showMenu, toggleMenu, darkModeActive }) => {
                     </ul>
                 </section>
                 <section className="menu-footer">
-                    <p className="copyright__text">Copyright © 2023</p>
+                    <p className={`copyright__text ${darkModeActive && 'copyright__text-dark'}`}>Copyright © 2023</p>
                 </section>
             </nav>
         </aside>

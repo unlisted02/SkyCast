@@ -91,9 +91,11 @@
 
 .add__icon {
     width: 10rem;
-    margin-bottom: 1.15rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
 }
 
 .city__illustration {
     width: 15rem;
+    margin-top: -8rem;
 }

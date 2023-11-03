@@ -1,10 +1,40 @@
 import './style.css';
 import AuthInput from '../../components/inputs/AuthInput';
 import AuthButton from '../../components/buttons/AuthButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Error from '../../components/cards/error/Error';
+import { useState } from 'react';
+import { auth } from "../../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
+    const [alertMessage, setAlertMessage] = useState('');
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                localStorage.setItem('uid', user.uid);
+                localStorage.setItem('email', user.email);
+                navigate("/home");
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                if (errorCode === 'auth/email-already-in-use') {
+                    setAlertMessage("Email already exists.");
+                }
+                else if (errorCode === 'auth/weak-password') {
+                    setAlertMessage("Password is weak.");
+                }
+                setTimeout(() => setAlertMessage(''), 2000)
+            });
+    }
+
     return (
         <div>
             <div className="main__container">
@@ -12,11 +42,11 @@ const SignUp = () => {
                     <main className="auth-content">
                         <span className="auth-header">Signup</span>
 
-                        <form className="auth-form">
-                            <AuthInput type="Email" />
-                            <AuthInput type="Password" />
-                            <AuthButton value="Signup" />
-                        </form>
+                        <div className="auth-form">
+                            <AuthInput type="Email" handleChange={(e) => setEmail(e.target.value)} />
+                            <AuthInput type="Password" handleChange={(e) => setPassword(e.target.value)} />
+                            <AuthButton value="Signup" handleClick={handleSignUp} />
+                        </div>
 
                         <div className="auth-link-wrapper">
                             <span className="auth-notice">Already Have an account?</span>
@@ -32,7 +62,7 @@ const SignUp = () => {
                 </div>
             </div>
 
-            <Error message="" />
+            {alertMessage && <Error message={alertMessage} />}
         </div >
     );
 }

@@ -1,8 +1,8 @@
 import './style.css';
 
-const AuthInput = ({ type }) => {
+const AuthInput = ({ type, handleChange }) => {
     return (
-        <input type={type.toLocaleLowerCase()} autoFocus placeholder={type} name={type.toLocaleLowerCase()} className="auth-input" required />
+        <input type={type.toLocaleLowerCase()} placeholder={type} name={type.toLocaleLowerCase()} className="auth-input" required onChange={handleChange} />
     )
 }
 

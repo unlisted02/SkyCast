@@ -270,6 +270,9 @@
     margin-top: 70px;
 }
 
+.copyright__text-dark{
+    color: white;
+}
 
 @media screen and (max-width: 959px) {
     .main__header {

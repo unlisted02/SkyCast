@@ -1,8 +1,8 @@
 import './style.css';
 
-const AuthButton = ({ value }) => {
+const AuthButton = ({ value, handleClick }) => {
     return (
-        <input type="submit" name="submit" value={value} className="auth-btn bg-custom-green" />
+        <input type="submit" name="submit" value={value} className="auth-btn bg-custom-green" onClick={handleClick} />
     )
 }
 

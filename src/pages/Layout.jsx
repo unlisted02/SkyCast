@@ -42,7 +42,7 @@ const Layout = () => {
                         <Route path="signup" element={<SignUp />} />
                         <Route path="home" element={<Home darkMode={darkModeActive} />} />
                         <Route path="add" element={<AddPage darkMode={darkModeActive} />} />
-                        <Route path="detail" element={<Detail />} />
+                        <Route path="detail" element={<Detail darkMode={darkModeActive} />} />
                     </Routes>
                 </div>
             </main>

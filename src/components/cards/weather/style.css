@@ -105,14 +105,14 @@ Weather Card Styling
 }
 
 .weather-icon__container {
-    width: 6rem;
+    width: 4rem;
     margin-bottom: 0;
     display: flex;
     justify-content: center;
 }
 
 .weather-icon__container>svg {
-    width: 10rem;
+    width: 6rem;
 }
 
 .add-city-btn {

@@ -1,6 +1,6 @@
-# WeatherApp
+# SkyCast
 
-**`WeatherApp`** is a web application that provides weather conditions and forecasts for selected cities.
+**`SkyCast`** is a web application that provides weather conditions and forecasts for selected cities.
 
 
 ## User Stories

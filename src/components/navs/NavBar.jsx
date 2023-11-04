@@ -15,7 +15,7 @@ const NavBar = ({darkModeActive,  toggleMenu, modeToggleSwitch}) => {
                     <text className={`${darkModeActive && 'logo__text-dark'} logo__text`} fill="#432c85"
                         fontFamily="SegoeUI-Semibold,Segoe UI" fontSize="30" fontWeight="600"
                         letterSpacing=".1em" transform="translate(220 56)">
-                        <tspan >Weather</tspan>
+                        <tspan >SkyCast</tspan>
                     </text>
                 </svg>
             </div >

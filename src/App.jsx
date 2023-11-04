@@ -1,4 +1,3 @@
-import { Router } from "react-router-dom";
 import Layout from "./pages/Layout";
 
 function App() {

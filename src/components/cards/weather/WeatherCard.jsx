@@ -3,20 +3,25 @@ import StateIcon from "../../svg/StateIcon";
 import "./style.css";
 import { fetchWeatheData } from "../../../services/weatherApi";
 import { useNavigate } from "react-router-dom";
-import { addCity } from "../../../services/firebaseApi";
+import { addCity, checkIfCityAlreadyExist } from "../../../services/firebaseApi";
 import AddButton from "../../buttons/AddButton";
 
+
 const WeatherCard = ({ cityName, darkMode, addMode }) => {
-    const [cityAdded, setCityAdded] = useState(false);
+    const [cityExist, setCityExist] = useState(false);
     const [state, setState] = useState('');
     const [temp, setTemp] = useState(0);
     const [minTemp, setMinTemp] = useState(0);
     const [maxTemp, setMaxTemp] = useState(0);
+
     const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
             const response = await fetchWeatheData(cityName);
+            const cityAlreadyExist = await checkIfCityAlreadyExist(cityName);
+
+            setCityExist(cityAlreadyExist);
             setState(response.state);
             setTemp(response.temp);
             setMinTemp(response.minTemp);
@@ -31,18 +36,20 @@ const WeatherCard = ({ cityName, darkMode, addMode }) => {
     }
 
     const handleAdd = () => {
-        const cityObj = {
-            id: '',
-            createdBy: localStorage.getItem('uid'),
-            name: cityName
-        }
+        if (!cityExist) {
+            const cityObj = {
+                id: '',
+                createdBy: localStorage.getItem('uid'),
+                name: cityName
+            }
 
-        addCity(cityObj);
+            addCity(cityObj);
+        }
     }
 
     return (
         <section
-            className={`weather__card ${addMode ? (!cityAdded && cityName ? '' : 'hidden') : ''} ${darkMode && 'weather__card-dark'} ${addMode && 'weather__card-add'}`} onClick={handleClick}>
+            className={`weather__card ${addMode ? (cityName ? '' : 'hidden') : ''} ${darkMode && 'weather__card-dark'} ${addMode && 'weather__card-add'}`} onClick={handleClick}>
             <span className="city-name__text">{cityName}</span>
             <div className="weather-icon__container">
                 <StateIcon state={state} />

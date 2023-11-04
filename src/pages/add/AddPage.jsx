@@ -3,23 +3,43 @@ import { months, days } from "../../constants";
 import { useState } from 'react';
 import WeatherCard from "../../components/cards/weather/WeatherCard";
 import StateIcon from '../../components/svg/StateIcon';
+import { fetchWeatheData, populateCapitals } from '../../services/weatherApi';
+import { useEffect } from 'react';
 
 const AddPage = ({ darkMode }) => {
     const [selectedCity, setSelectedCity] = useState('');
     const [showNote, setShowNote] = useState(false);
-    const [cardCity, setCardCity] = useState("Tokyo");
+    const [cardCity, setCardCity] = useState("");
     const [followedCM, setFollowedCM] = useState(false);
-    const [state, setState] = useState('Sunny');
+    const [state, setState] = useState('');
+    const [temp, setTemp] = useState(0);
+    const [capitals, setCapitals] = useState([]);
 
     const date = new Date();
-    const temp = 72;
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetchWeatheData('rome');
+            const data = await populateCapitals();
+
+            setState(response.state);
+            setTemp(response.temp);
+            setCapitals(data);
+        }
+
+        fetchData();
+    }, []);
 
     const handleCityInputChange = (event) => {
         setSelectedCity(event.target.value);
     };
 
-    const selectCity = (city) => {
-        // Implement your logic for selecting a city here
+    const selectCity = () => {
+        console.log(capitals)
+        if (capitals.includes(selectedCity)) {
+            setCardCity(selectedCity);
+            setShowNote(false);
+        }
     };
 
     const addCityOfTheMonth = () => {

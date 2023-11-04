@@ -101,3 +101,24 @@ export async function fetchWeatherDetail(city) {
 
     return { state: state, temp: temp, hum: hum, wind: wind, daysInfo: daysInfo }
 }
+
+
+async function getCountries() {
+    const response = await fetch('https://restcountries.com/v3.1/all');
+    const countries = await response.json();
+    return countries;
+}
+
+export async function populateCapitals() {
+    const capitals = [];
+
+    const countries = await getCountries();
+
+    countries.forEach((country) => {
+        if (country.capital) {
+            capitals.push(country.capital[0]);
+        }
+    });
+
+    capitals.sort();
+}

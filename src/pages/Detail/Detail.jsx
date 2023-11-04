@@ -95,7 +95,7 @@ const Detail = ({ darkMode }) => {
                             <div className="day-weather__container" key={index}>
                                 <span className="day-name__text">{day.name}</span>
                                 <StateIcon
-                                    state={state} customClass='forecast-condition__icon' />
+                                    state={day.state} customClass='forecast-condition__icon' />
                                 <span className="day-temp__text">{day.temp}°</span>
                                 <span className="day-state__text">{day.state}</span>
                             </div>

@@ -3,7 +3,7 @@ import AuthInput from '../../components/inputs/AuthInput';
 import AuthButton from '../../components/buttons/AuthButton';
 import { Link, useNavigate } from 'react-router-dom';
 import Error from '../../components/cards/error/Error';
-import { useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { auth } from "../../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -32,6 +32,16 @@ const Login = () => {
                 setTimeout(() => setAlertMessage(''), 2000)
             });
     }
+
+    useEffect(() => {
+        const uid = localStorage.getItem("email");
+        console.log(uid);
+
+        if (uid !== undefined) {
+            navigate('/home')
+        }
+
+    }, [])
 
     return (
         <div>

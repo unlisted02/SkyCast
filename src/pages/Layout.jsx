@@ -7,7 +7,7 @@ import { useState } from "react";
 import SideBar from "../components/navs/SideBar";
 import Home from "./home/Home";
 import AddPage from "./add/AddPage";
-import Detail from "./detail/Detail";
+import Detail from "./details/Detail";
 
 
 const Layout = () => {

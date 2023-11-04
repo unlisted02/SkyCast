@@ -3,6 +3,8 @@ import StateIcon from "../../svg/StateIcon";
 import "./style.css";
 import { fetchWeatheData } from "../../../services/weatherApi";
 import { useNavigate } from "react-router-dom";
+import { addCity } from "../../../services/firebaseApi";
+import AddButton from "../../buttons/AddButton";
 
 const WeatherCard = ({ cityName, darkMode, addMode }) => {
     const [cityAdded, setCityAdded] = useState(false);
@@ -22,10 +24,20 @@ const WeatherCard = ({ cityName, darkMode, addMode }) => {
         }
 
         fetchData();
-    }, [])
+    }, [cityName])
 
     const handleClick = () => {
         navigate(`/detail/${cityName}`);
+    }
+
+    const handleAdd = () => {
+        const cityObj = {
+            id: '',
+            createdBy: localStorage.getItem('uid'),
+            name: cityName
+        }
+
+        addCity(cityObj);
     }
 
     return (
@@ -55,11 +67,7 @@ const WeatherCard = ({ cityName, darkMode, addMode }) => {
                     <span className="max__text">Max</span>
                 </div>
             </section>
-            {addMode && (
-                <button className="add-city-btn" >
-                    ADD CITY +
-                </button>
-            )}
+            {addMode && (<AddButton handleAdd={handleAdd} />)}
         </section>
     );
 };

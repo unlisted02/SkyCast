@@ -5,6 +5,7 @@ import WeatherCard from "../../components/cards/weather/WeatherCard";
 import StateIcon from '../../components/svg/StateIcon';
 import { fetchWeatheData, populateCapitals } from '../../services/weatherApi';
 import { useEffect } from 'react';
+import { addCity, checkIfCityAlreadyExist } from '../../services/firebaseApi';
 
 const AddPage = ({ darkMode }) => {
     const [selectedCity, setSelectedCity] = useState('');
@@ -14,14 +15,16 @@ const AddPage = ({ darkMode }) => {
     const [state, setState] = useState('');
     const [temp, setTemp] = useState(0);
     const [capitals, setCapitals] = useState([]);
-
+    const cityOfTheMonth = 'Rome';
     const date = new Date();
 
     useEffect(() => {
         async function fetchData() {
-            const response = await fetchWeatheData('rome');
+            const response = await fetchWeatheData(cityOfTheMonth);
             const data = await populateCapitals();
+            const cityAlreadyExist = await checkIfCityAlreadyExist(cityOfTheMonth);
 
+            setFollowedCM(cityAlreadyExist);
             setState(response.state);
             setTemp(response.temp);
             setCapitals(data);
@@ -34,17 +37,29 @@ const AddPage = ({ darkMode }) => {
         setSelectedCity(event.target.value);
     };
 
-    const selectCity = () => {
-        console.log(capitals)
+    const handleSelectCity = () => {
         if (capitals.includes(selectedCity)) {
             setCardCity(selectedCity);
             setShowNote(false);
         }
     };
 
+    const handlKeyDown = (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            handleSelectCity();
+        }
+    };
+
     const addCityOfTheMonth = () => {
-        // Implement your logic for adding the city of the month here
-        setFollowedCM(true); // Example: Set to true when the city is followed
+        const cityObj = {
+            id: '',
+            createdBy: localStorage.getItem('uid'),
+            name: cityOfTheMonth
+        }
+
+        addCity(cityObj);
+        setFollowedCM(true);
     }
 
     return (
@@ -58,10 +73,10 @@ const AddPage = ({ darkMode }) => {
                                 className="search-city-input"
                                 autoComplete="off"
                                 placeholder="search city"
-                                value={selectedCity}
                                 onChange={handleCityInputChange}
+                                onKeyDown={handlKeyDown}
                             />
-                            <button className="search-city-btn" onClick={() => selectCity(selectedCity)}>
+                            <button className="search-city-btn" onClick={handleSelectCity}>
                                 <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451 451">
                                     <path fill="#FFF"
                                         d="M447 428L337.6 318.4A192.5 192.5 0 0 0 192.4 0C86.3 0 0 86.3 0 192.3s86.3 192.3 192.3 192.3c48.2 0 92.3-17.8 126-47.2L428.2 447a13.2 13.2 0 0 0 19 0 13.5 13.5 0 0 0 0-19zM27 192.3C27 101.1 101 27 192.3 27c91.1 0 165.3 74.2 165.3 165.3s-74.2 165.4-165.4 165.4A165.6 165.6 0 0 1 27 192.3z"></path>
@@ -92,7 +107,7 @@ const AddPage = ({ darkMode }) => {
                             <div className="fav-city-info">
                                 <span className="fav-city-temp">{temp}°</span>
                                 <div className="fav-city-name-wrapper">
-                                    <span className="fav-city-name">Rome</span>
+                                    <span className="fav-city-name">{cityOfTheMonth}</span>
                                     <span className="fav-city-country">IT</span>
                                 </div>
                                 <span className="fav-city-state">{state}</span>

@@ -121,4 +121,5 @@ export async function populateCapitals() {
     });
 
     capitals.sort();
+    return capitals;
 }

@@ -115,23 +115,7 @@ Weather Card Styling
     width: 6rem;
 }
 
-.add-city-btn {
-    outline: none;
-    border: none;
-    cursor: pointer;
-    border-radius: 3rem;
-    padding: 1rem 2rem;
-    color: white;
-    margin-top: 2rem;
-    background-color: #2b244d;
-    font-size: 1rem;
-    font-weight: bold;
-    /* margin-bottom: 6rem; */
-}
 
-.add-city-btn:hover {
-    background-color: #31feae;
-}
 
 .city-added-note {
     display: flex;

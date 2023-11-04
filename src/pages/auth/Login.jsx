@@ -34,13 +34,11 @@ const Login = () => {
     }
 
     useEffect(() => {
-        const uid = localStorage.getItem("email");
-        console.log(uid);
+        const uid = localStorage.getItem("uid") ? localStorage.getItem("uid") : '';
 
-        if (uid !== undefined) {
+        if (uid !== '') {
             navigate('/home')
         }
-
     }, [])
 
     return (

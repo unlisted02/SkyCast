@@ -27,6 +27,7 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with `LiceCap`.
 
+
 ## Development server
 * Install Node.js
 * Clone repository

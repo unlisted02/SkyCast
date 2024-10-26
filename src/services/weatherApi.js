@@ -9,6 +9,7 @@ export async function getWeather(city, metric = 'metric') {
     return data;
 }
 
+
 export async function getForecast(city, metric = 'metric') {
     const response = await fetch(`${forcastURL}${city}&units=${metric}&APPID=${apiKeys.apiKeyWeather}`);
     const data = await response.json();

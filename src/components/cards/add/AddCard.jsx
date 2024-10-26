@@ -9,6 +9,7 @@ const AddCard = ({ darkMode }) => {
     const handleClick = () => {
         navigate('/add');
     }
+    
 
     return (
         <div className={`add__card ${darkMode && 'add__card-dark'}`} onClick={handleClick}>

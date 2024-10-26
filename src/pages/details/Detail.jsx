@@ -18,6 +18,7 @@ const Detail = ({ darkMode }) => {
     useEffect(() => {
         async function fetchData() {
             const response = await fetchWeatherDetail(name);
+      
             setTemp(response.temp);
             setState(response.state);
             setHum(response.hum);
